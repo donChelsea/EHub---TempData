@@ -4,9 +4,12 @@ import picocli.CommandLine;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+// set up the command name
 
 @CommandLine.Command
-public class TempUpdateApp {
+public class TempUpdateApp implements Callable {
 
     /**
      * these are the options and parameters that are required at the command line
@@ -23,4 +26,9 @@ public class TempUpdateApp {
 
     @CommandLine.Parameters(index = "1", paramLabel = "TIMESTAMP", description = "the time and date of the specified moment", split = "T")
     static String[] timestamp;
+
+    @Override
+    public Object call() throws Exception {
+        return null;
+    }
 }
