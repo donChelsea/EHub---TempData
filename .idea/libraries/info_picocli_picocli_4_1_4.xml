@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="info.picocli:picocli:4.1.4" type="repository">
+    <properties maven-id="info.picocli:picocli:4.1.4" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/info/picocli/picocli/4.1.4/picocli-4.1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
