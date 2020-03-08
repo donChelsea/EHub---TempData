@@ -1,5 +1,6 @@
 package com.company;
 
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.beust.jcommander.ParameterException;
 import picocli.CommandLine;
 
@@ -23,6 +24,10 @@ public class TempUpdateApp implements Callable {
     static String day;
     static File[] monthsDirectory;
     static List<File> daysDirectory;
+    static File fileToSearch;
+    static List<String> result;
+
+
 
     /**
      * these are the options and parameters that are required at the command line
@@ -76,6 +81,35 @@ public class TempUpdateApp implements Callable {
                 daysDirectory = Arrays.asList(file.listFiles());
             }
         }
+    }
+
+    /**
+     * this method will look in the directory stores the days of the month and json data
+     * first, it will search in the folder corresponding with the requested data for any lines matching the params
+     * if nothing is found in the first folder, it will iterate through the remaining day folders for matches
+     * if matches are found, it will convert the json objects into strings and present the data to the user
+     * @throws IOException
+     */
+
+    public static void returnResult() throws IOException {
+        for (File file : daysDirectory) {
+            if (file.toString().endsWith(day + ".jsonl.gz")) {
+                fileToSearch = file;
+                result = readLinesFromFile(fileToSearch);
+                if (!result.isEmpty()) {
+                    break;
+                } else {
+                    for (int i = 0; i < daysDirectory.size() - 1; i++) {
+                        if (daysDirectory.get(i).toString().endsWith(".jsonl.gz")) {
+                            fileToSearch = daysDirectory.get(i);
+                            result.addAll(readLinesFromFile(fileToSearch));
+                            fileToSearch = daysDirectory.get(i + 1);
+                        }
+                    }
+                }
+            }
+        }
+        convertObjectToJson();
     }
 
     /**
