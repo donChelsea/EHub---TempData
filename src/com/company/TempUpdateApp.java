@@ -1,15 +1,33 @@
 package com.company;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.beust.jcommander.ParameterException;
 import picocli.CommandLine;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.zip.GZIPInputStream;
 
 // set up the command name
 
 @CommandLine.Command
 public class TempUpdateApp implements Callable {
+    static String time;
+    static String day;
+    static File[] monthsDirectory;
+    static List<File> daysDirectory;
+    static File fileToSearch;
+    static List<String> result;
+
+
 
     /**
      * these are the options and parameters that are required at the command line
@@ -29,6 +47,127 @@ public class TempUpdateApp implements Callable {
 
     @Override
     public Object call() throws Exception {
-        return null;
+        getDirectories();
+        returnResult();
+        return 0;
+    }
+
+    /**
+     * uses the date from the timestamp[] to locate and store all the sub-folders in the main directory
+     * validates each path before continuing to the next sub-folder
+     */
+
+    public static void getDirectories() {
+        String[] dateSplit = timestamp[0].split("-");
+        String year = dateSplit[0];
+        String month = dateSplit[1];
+        day = dateSplit[2];
+        time = timestamp[1];
+
+        validatePath(mainDirectory.toString());
+
+        File[] yearDir = mainDirectory.listFiles();
+
+        for (File file : yearDir) {
+            if (file.toString().contains(year)) {
+                validatePath(file.toString());
+                monthsDirectory = file.listFiles();
+            }
+        }
+
+        for (File file : monthsDirectory) {
+            if (file.toString().endsWith(month)) {
+                validatePath(file.toString());
+                daysDirectory = Arrays.asList(file.listFiles());
+            }
+        }
+    }
+
+    /**
+     * this method will look in the directory stores the days of the month and json data
+     * first, it will search in the folder corresponding with the requested data for any lines matching the params
+     * if nothing is found in the first folder, it will iterate through the remaining day folders for matches
+     * if matches are found, it will convert the json objects into strings and present the data to the user
+     * @throws IOException
+     */
+
+    public static void returnResult() throws IOException {
+        for (File file : daysDirectory) {
+            if (file.toString().endsWith(day + ".jsonl.gz")) {
+                fileToSearch = file;
+                result = readLinesFromFile(fileToSearch);
+                if (!result.isEmpty()) {
+                    break;
+                } else {
+                    for (int i = 0; i < daysDirectory.size() - 1; i++) {
+                        if (daysDirectory.get(i).toString().endsWith(".jsonl.gz")) {
+                            fileToSearch = daysDirectory.get(i);
+                            result.addAll(readLinesFromFile(fileToSearch));
+                            fileToSearch = daysDirectory.get(i + 1);
+                        }
+                    }
+                }
+            }
+        }
+        convertObjectToJson();
+    }
+
+    /**
+     * used for path validation
+     * @param filePath
+     */
+
+    public static void validatePath(String filePath) {
+        Path pathToDir = Paths.get(filePath);
+        if (!Files.exists(pathToDir, LinkOption.NOFOLLOW_LINKS)) {
+            String message = String.format("The directory [%s] does not exist: ", pathToDir.toString());
+            throw new ParameterException(message);
+        }
+
+        if (!Files.isDirectory(pathToDir, LinkOption.NOFOLLOW_LINKS)) {
+            String message = String.format("The directory specified [%s] is not a directory: ", pathToDir.toString());
+            throw new ParameterException(message);
+        }
+    }
+
+    /**
+     * this method will unzip the passed in file in order to read each line
+     * it will check a line against the requested time parameter and store the matching lines in a list as strings
+     * returns the list of matching lines
+     * @param file
+     * @return
+     * @throws IOException
+     */
+
+    public static List<String> readLinesFromFile(File file) throws IOException {
+        List<String> matchingLines = new ArrayList<>();
+        InputStream fileStream = new FileInputStream(file);
+        InputStream gzipStream = new GZIPInputStream(fileStream);
+        Reader decoder = new InputStreamReader(gzipStream, StandardCharsets.UTF_8);
+        BufferedReader buffered = new BufferedReader(decoder);
+        String line;
+        while ((line = buffered.readLine()) != null) {
+            if (line.contains(time)) {
+                matchingLines = getLinesMatchingFields(line);
+            }
+        }
+        return matchingLines;
+    }
+
+    /**
+     * this method does more matching by checking the lines matching the time against the required fields
+     * if a line has the matching fields, it will be stored in a list of strings and the list is returned to the caller
+     * @param line
+     * @return
+     */
+
+    public static List<String> getLinesMatchingFields(String line) {
+        List<String> matchedFields = new ArrayList<>();
+        for (int i = 0; i < fields.size(); i++) {
+            if (line.contains(fields.get(i))) {
+                matchedFields.add(line);
+            }
+        }
+        return matchedFields;
     }
 }
