@@ -1,7 +1,19 @@
 package com.company;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ListObjectsRequest;
+import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.beust.jcommander.ParameterException;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+import org.json.simple.JSONObject;
 import picocli.CommandLine;
 
 import java.io.*;
@@ -16,9 +28,18 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.zip.GZIPInputStream;
 
+class Main {
+
+    static String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
+
+    public static void main(String[] args) {
+        new CommandLine(new TempUpdateApp()).execute(tester);
+    }
+}
+
 // set up the command name
 
-@CommandLine.Command
+@CommandLine.Command(name = "tempupdate")
 public class TempUpdateApp implements Callable {
     static String time;
     static String day;
@@ -26,7 +47,10 @@ public class TempUpdateApp implements Callable {
     static List<File> daysDirectory;
     static File fileToSearch;
     static List<String> result;
-
+    static Change change;
+    AmazonS3Client s3Client = new AmazonS3Client();
+    String bucketname = "net.energyhub.assets";
+    String folderkey = "/public/dev-exercises";
 
 
     /**
@@ -169,5 +193,101 @@ public class TempUpdateApp implements Callable {
             }
         }
         return matchedFields;
+    }
+
+    /**
+     * this method will iterate through the list of matching json strings and map each string to create a change object
+     * the object is converted back to a json string by the ObjectMapper and edited in order to match the required formatting for the result
+     * @throws JsonProcessingException
+     */
+
+    public static void convertObjectToJson() throws JsonProcessingException {
+        for (String line : result) {
+            Gson gson = new Gson();
+            change = gson.fromJson(line, Change.class);
+            String ts = change.ts;
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
+            String jsonString = mapper.writeValueAsString(change);
+
+            JSONObject jo = new JSONObject();
+            jo.put("ts", ts);
+
+            StringBuilder formattedJson = new StringBuilder(jsonString);
+            int last = formattedJson.length();
+            formattedJson.replace(last-1, last, ", " + jo.toString().substring(1, jo.toString().length()-1) + "}");
+
+            System.out.println(formattedJson.toString());
+        }
+    }
+
+    /**
+     * this method will create a make a request to S3 using the bucket name and folder.
+     * it should store each object retrieved from the s3 client into a list and returns that list
+     * Access was denied when trying to access the folder from s3 directly (403 error)
+     * @param bucketName
+     * @param folderKey
+     * @return
+     */
+
+    public List<String> getObjectslistFromFolder(String bucketName, String folderKey) {
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
+                .withBucketName(bucketName)
+                .withPrefix(folderKey + "/");
+
+        List<String> keys = new ArrayList<>();
+
+        ObjectListing objects = s3Client.listObjects(listObjectsRequest);
+        for (;;) {
+            List<S3ObjectSummary> summaries = objects.getObjectSummaries();
+            if (summaries.size() < 1) {
+                break;
+            }
+            summaries.forEach(s -> keys.add(s.getKey()));
+            objects = s3Client.listNextBatchOfObjects(objects);
+        }
+        return keys;
+    }
+
+// MODEL CLASSES
+
+    /**
+     * change represents the main json object and state is the "after" object
+     * @SerializedName ensures the correct corresponding json object is mapped to each field
+     * @JsonIgnore prevents the annotated field from appearing in the response
+     * @JsonInclude(JsonInclude.Include.NON_NULL) excludes the field if the value is null
+     */
+
+    public static class Change {
+        @SerializedName("changeTime")
+        @JsonIgnore
+        public String ts;
+        @SerializedName("after")
+        public State state;
+
+        public Change() {
+        }
+
+        class State {
+            @JsonInclude(JsonInclude.Include.NON_NULL)
+            Change change = Change.this;
+
+            @SerializedName("ambientTemp")
+            @JsonInclude(JsonInclude.Include.NON_NULL)
+            String ambientTemp;
+            @SerializedName("schedule")
+            @JsonInclude(JsonInclude.Include.NON_NULL)
+            String schedule;
+            @SerializedName("lastAlertTs")
+            @JsonInclude(JsonInclude.Include.NON_NULL)
+            String lastAlertTs;
+            @JsonInclude(JsonInclude.Include.NON_NULL)
+            String ts = change.ts;
+
+            public State() {
+            }
+        }
     }
 }
