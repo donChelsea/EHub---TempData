@@ -29,10 +29,10 @@ import java.util.concurrent.Callable;
 import java.util.zip.GZIPInputStream;
 
 class Main {
-    static String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
+    //static String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
 
     public static void main(String[] args) {
-        new CommandLine(new TempUpdateApp()).execute(tester);
+        new CommandLine(new TempUpdateApp()).execute(args);
     }
 }
 
