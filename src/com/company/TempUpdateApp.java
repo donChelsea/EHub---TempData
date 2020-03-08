@@ -1,7 +1,9 @@
 package com.company;
 
-import com.amazonaws.services.route53.model.Change;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ListObjectsRequest;
+import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.beust.jcommander.ParameterException;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,10 +30,10 @@ import java.util.zip.GZIPInputStream;
 
 class Main {
 
-    //static String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
+    static String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
 
     public static void main(String[] args) {
-        new CommandLine(new TempUpdateApp()).execute(args);
+        new CommandLine(new TempUpdateApp()).execute(tester);
     }
 }
 
@@ -46,6 +48,9 @@ public class TempUpdateApp implements Callable {
     static File fileToSearch;
     static List<String> result;
     static Change change;
+    AmazonS3Client s3Client = new AmazonS3Client();
+    String bucketname = "net.energyhub.assets";
+    String folderkey = "/public/dev-exercises";
 
 
     /**
@@ -216,6 +221,34 @@ public class TempUpdateApp implements Callable {
 
             System.out.println(formattedJson.toString());
         }
+    }
+
+    /**
+     * this method will create a make a request to S3 using the bucket name and folder.
+     * it should store each object retrieved from the s3 client into a list and returns that list
+     * Access was denied when trying to access the folder from s3 directly (403 error)
+     * @param bucketName
+     * @param folderKey
+     * @return
+     */
+
+    public List<String> getObjectslistFromFolder(String bucketName, String folderKey) {
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
+                .withBucketName(bucketName)
+                .withPrefix(folderKey + "/");
+
+        List<String> keys = new ArrayList<>();
+
+        ObjectListing objects = s3Client.listObjects(listObjectsRequest);
+        for (;;) {
+            List<S3ObjectSummary> summaries = objects.getObjectSummaries();
+            if (summaries.size() < 1) {
+                break;
+            }
+            summaries.forEach(s -> keys.add(s.getKey()));
+            objects = s3Client.listNextBatchOfObjects(objects);
+        }
+        return keys;
     }
 
 // MODEL CLASSES
