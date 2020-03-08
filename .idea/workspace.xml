@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1a38a88-ed7c-499e-9598-91e29b02a694" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/TempUpdateAppTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/OldMain.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change$State.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateAppTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateAppTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateAppTest.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/OldMain.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/TempUpdateApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/TempUpdateApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/TempUpdateAppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/TempUpdateAppTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,13 +68,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TempUpdateAppTest.call">
+  <component name="RunManager" selected="JUnit.TempUpdateAppTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.company.Main" />
       <module name="ehub_tempdata" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TempUpdateAppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ehub_tempdata" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.TempUpdateAppTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -98,9 +113,11 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.TempUpdateAppTest.call" />
+      <item itemvalue="JUnit.TempUpdateAppTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TempUpdateAppTest" />
         <item itemvalue="JUnit.TempUpdateAppTest.call" />
         <item itemvalue="Application.Main" />
       </list>

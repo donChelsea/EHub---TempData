@@ -41,7 +41,7 @@ class Main {
 // set up the command name
 
 @CommandLine.Command(name = "tempupdate")
-public class TempUpdateApp implements Callable {
+class TempUpdateApp implements Callable {
     static String time;
     static String day;
     static File[] monthsDirectory;
@@ -262,7 +262,7 @@ public class TempUpdateApp implements Callable {
      * @JsonInclude(JsonInclude.Include.NON_NULL) excludes the field if the value is null
      */
 
-    public static class Change {
+    static class Change {
         @SerializedName("changeTime")
         @JsonIgnore
         public String ts;
