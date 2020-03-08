@@ -1,4 +1,4 @@
-# EHub---TempData
+# EHub-TempData
 Following the prompt at https://gist.github.com/jdangerx/883b9057c5af65e6965acc646f445c3e
 
 <h3> How to run: </h3> 
