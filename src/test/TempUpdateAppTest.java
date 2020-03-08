@@ -1,5 +1,6 @@
-package com.company;
+package test;
 
+import com.company.TempUpdateApp;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,10 +8,13 @@ import picocli.CommandLine;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
 public class TempUpdateAppTest {
+
     String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
     TempUpdateApp app;
     CommandLine cmd;
@@ -36,5 +40,6 @@ public class TempUpdateAppTest {
         app = null;
         cmd = null;
     }
+
 
 }

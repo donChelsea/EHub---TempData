@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e1a38a88-ed7c-499e-9598-91e29b02a694" name="Default Changelist" comment="" />
+    <list default="true" id="e1a38a88-ed7c-499e-9598-91e29b02a694" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/TempUpdateAppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/OldMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change$State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp$Change.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateAppTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ehub_tempdata/com/company/TempUpdateAppTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/OldMain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/TempUpdateApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/TempUpdateApp.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +49,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.company" />
       <recent name="test" />
+      <recent name="com.company" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
