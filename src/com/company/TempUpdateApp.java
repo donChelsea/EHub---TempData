@@ -29,6 +29,8 @@ import java.util.concurrent.Callable;
 import java.util.zip.GZIPInputStream;
 
 class Main {
+    @CommandLine.Spec
+    static CommandLine.Model.CommandSpec spec;
 
     static String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
 
