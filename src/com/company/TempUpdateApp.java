@@ -225,6 +225,7 @@ public class TempUpdateApp implements Callable {
     /**
      * this method will create a make a request to S3 using the bucket name and folder.
      * it should store each object retrieved from the s3 client into a list and returns that list
+     * the list would then be passed to returnResult for matching, to create a change object, and to return the result
      * Access was denied when trying to access the folder from s3 directly (403 error)
      * @param bucketName
      * @param folderKey
