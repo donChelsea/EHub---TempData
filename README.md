@@ -14,7 +14,7 @@ Clone or download this project and navigate to out/production/ehub_tempdata.
 Enter into terminal any field(s) and parameters to search:
 <pre><code>java com.company.ehub_tempdata.TempUpdateApp
 
-tempupdate --field ambientTemp /tmp/ehub_data 2016-01-01T03:00
+tempupdate --field ambientTemp /tmp/ehub_data 2016-01-01T03:02
 </code></pre>
 
 <h3> From an IDE Console: </h3> 
