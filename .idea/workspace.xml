@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e1a38a88-ed7c-499e-9598-91e29b02a694" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/OldMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/TempUpdateApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/TempUpdateApp.java" afterDir="false" />
-    </list>
+    <list default="true" id="e1a38a88-ed7c-499e-9598-91e29b02a694" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +38,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="test" />
       <recent name="com.company" />
+      <recent name="test" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -62,7 +57,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.TempUpdateAppTest.call">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.company.Main" />
       <module name="ehub_tempdata" />
@@ -73,8 +68,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TempUpdateAppTest.call" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ehub_tempdata" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.company.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.company" />
+      <option name="MAIN_CLASS_NAME" value="com.company.TempUpdateAppTest" />
+      <option name="METHOD_NAME" value="call" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.TempUpdateAppTest.call" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TempUpdateAppTest.call" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
