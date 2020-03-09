@@ -6,25 +6,15 @@ Following the prompt at https://gist.github.com/jdangerx/883b9057c5af65e6965acc6
 <h3> From terminal/command line: </h3> 
 Clone or download this project and navigate to out/production/ehub_tempdata.
 
-
-
-
-
-
 Enter into terminal any field(s) and parameters to search:
-<pre><code>javac com.company.ehub_tempdata.TempUpdateApp.java && java -cp  com.company.ehub_tempdata.TempUpdateApp
+<pre><code>java com.company.Main
 
-tempupdate --field ambientTemp /tmp/ehub_data 2016-01-01T03:02
+--field ambientTemp /tmp/ehub_data 2016-01-01T03:02
 </code></pre>
 
 <h3> From an IDE Console: </h3> 
-Pass requested arguments to the execute method in main and run
+Run project and pass the parameters when prompted
 <br></br>
 
-<pre><code> 
-String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
-
-public static void main(String[] args) {</br>
-   new CommandLine(new TempUpdate()).execute(tester);</br>
-} 
+<pre><code> Example: --field ambientTemp --field schedule /tmp/ehub_data 2016-01-01T09:34 
 </code></pre>
