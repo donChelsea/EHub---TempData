@@ -1,7 +1,5 @@
 package com.company;
 
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
@@ -27,20 +25,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.zip.GZIPInputStream;
-
-class Main {
-    //static String[] tester = {"--field", "ambientTemp", "--field", "schedule", "/tmp/ehub_data", "2016-01-01T09:34"};
-
-    public static void main(String[] args) {
-        new CommandLine(new TempUpdateApp()).execute(args);
-    }
-}
 
 // set up the command name
 
 @CommandLine.Command(name = "tempupdate")
+public
 class TempUpdateApp implements Callable {
     static String time;
     static String day;
